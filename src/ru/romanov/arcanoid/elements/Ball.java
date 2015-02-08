@@ -18,12 +18,17 @@ public class Ball {
     private double ballTop;
     private double ballLeft;
     private double ballRight;
+    private double ballSpeedY;
+    private double ballSpeedX;
+    private final double ballMaxSpeedX;
 
     private final Circle ball;
 
-    public Ball(Circle ball) {
+    public Ball(Circle ball, double ySpeed) {
         this.ball = ball;
         ballDiameter = ball.getRadius() * 2;
+        ballSpeedY = ySpeed;
+        ballMaxSpeedX = ySpeed * 2;
         initParams();
     }
 
@@ -59,12 +64,16 @@ public class Ball {
         return ball.getLayoutY();
     }
 
-    public void move(double xDistance, double yDistance) {
-        ballLeft += xDistance;
-        ballRight += xDistance;
+    public double getBallCenterX() {
+        return getBallLeft() + ball.getRadius();
+    }
+
+    public void move() {
+        ballLeft += ballSpeedX;
+        ballRight += ballSpeedX;
         ball.setLayoutX(ballLeft);
-        ballTop += yDistance;
-        ballBottom += yDistance;
+        ballTop += ballSpeedY;
+        ballBottom += ballSpeedY;
         ball.setLayoutX(ballLeft);
         ball.setLayoutY(ballTop);
     }
@@ -73,6 +82,27 @@ public class Ball {
         ball.setLayoutX(newX);
         ball.setLayoutY(newY);
         initParams();
+    }
+
+    public void revertSpeedY() {
+        ballSpeedY = -ballSpeedY;
+    }
+
+    public void revertSpeedX() {
+        ballSpeedX = -ballSpeedX;
+    }
+
+    /**
+     * Добавить speedUp к текущей скорости по Х
+     *
+     * @param speedUp > 0 - вправо, < 0 - влево
+     */
+    public void speedUpX(double speedUp) {
+        ballSpeedX += speedUp;
+        double moduleSpeedX = Math.abs(ballSpeedX);
+        if (moduleSpeedX > ballMaxSpeedX) {
+            ballSpeedX = (ballSpeedX / moduleSpeedX) * ballMaxSpeedX;
+        }
     }
 
     private void initParams() {

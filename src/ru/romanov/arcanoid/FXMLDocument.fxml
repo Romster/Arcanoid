@@ -9,11 +9,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="gameArea" onMouseEntered="#startGame" onMouseExited="#stopGame" onMouseMoved="#onMouseMoveEvent" prefHeight="320.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.romanov.arcanoid.FXMLDocumentController">
+<AnchorPane id="AnchorPane" fx:id="gameArea" onMouseEntered="#startGame" onMouseExited="#stopGame" onMouseMoved="#onMouseMoveEvent" prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.romanov.arcanoid.FXMLDocumentController">
    <children>
-      <Rectangle fx:id="arcan" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="35.0" layoutX="14.0" layoutY="271.0" stroke="BLACK" strokeType="INSIDE" width="113.0" />
-      <Circle fx:id="ball" fill="DODGERBLUE" layoutX="320.0" layoutY="22.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
-      <Label fx:id="infoLabel" layoutX="200.0" layoutY="128.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" rotate="-45.0" text="        PAUSED" textAlignment="CENTER" textFill="#b53c2c">
+      <Rectangle fx:id="arcan" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="35.0" layoutX="14.0" layoutY="719.0" stroke="BLACK" strokeType="INSIDE" width="113.0" />
+      <Circle fx:id="ball" fill="DODGERBLUE" layoutX="640.0" layoutY="14.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
+      <Label fx:id="infoLabel" layoutX="540.0" layoutY="334.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" rotate="-45.0" text="        PAUSED" textAlignment="CENTER" textFill="#b53c2c">
          <font>
             <Font name="Caladea Bold" size="33.0" />
          </font></Label>

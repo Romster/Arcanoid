@@ -6,13 +6,9 @@
 package ru.romanov.arcanoid;
 
 import java.net.URL;
-import java.util.Date;
 import java.util.ResourceBundle;
-import javafx.animation.AnimationTimer;
-import javafx.beans.property.DoubleProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -38,9 +34,6 @@ public class FXMLDocumentController implements Initializable, GameEventListener 
     
     private GameLifecycleManager gameLifecycleManager;
 
-    private double ballYSpeed = 2;
-    private double ballXSpeed = 0;
-    private double arcanSpeed = 5;
 
 
 
