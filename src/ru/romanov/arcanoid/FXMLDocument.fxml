@@ -25,13 +25,13 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="replayButton" layoutX="523.0" layoutY="434.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="133.0" text="Retry">
+            <Button fx:id="replayButton" layoutX="541.0" layoutY="434.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="133.0" text="Retry">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Circle fx:id="ball" fill="DODGERBLUE" layoutX="590.0" layoutY="27.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
-            <Label fx:id="infoLabel" layoutX="516.0" layoutY="334.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="133.0" text=" PAUSED" textAlignment="CENTER" textFill="#b53c2c">
+            <Circle fx:id="ball" fill="DODGERBLUE" layoutX="599.0" layoutY="19.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label fx:id="infoLabel" layoutX="532.0" layoutY="334.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="133.0" text=" PAUSED" textAlignment="CENTER" textFill="#b53c2c">
                <font>
                   <Font name="Caladea Bold" size="33.0" />
                </font>

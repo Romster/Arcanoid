@@ -50,6 +50,9 @@ public class FXMLDocumentController implements Initializable, GameEventListener 
             firstInitialization();
             startGame();
         });
+        replayButton.setVisible(false);
+        infoLabel.setText("START");
+        gameLifecycleManager.setStatus(GameStatus.PAUSED);
     }
 
     @Override
@@ -64,6 +67,7 @@ public class FXMLDocumentController implements Initializable, GameEventListener 
     public void stopGame() {
         gameLifecycleManager.stop();
         infoLabel.setVisible(true);
+        infoLabel.setText("PAUSED");
         gameLifecycleManager.setStatus(GameStatus.PAUSED);
     }
 
@@ -79,9 +83,9 @@ public class FXMLDocumentController implements Initializable, GameEventListener 
     public void onMouseMoveEvent(MouseEvent mouseEvent) {
         gameLifecycleManager.mousePosition.set(mouseEvent.getSceneX(), mouseEvent.getSceneY());
     }
-    
+
     public void onKeyPressedEvent(KeyEvent event) {
-        System.out.println("Key: " +event.getCode());
+        System.out.println("Key: " + event.getCode());
     }
 
     private void firstInitialization() {
