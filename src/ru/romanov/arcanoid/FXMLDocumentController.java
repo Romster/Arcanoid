@@ -9,11 +9,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import ru.romanov.arcanoid.util.GameStatus;
 
 /**
  *
@@ -27,43 +30,64 @@ public class FXMLDocumentController implements Initializable, GameEventListener 
     Rectangle arcan;
     @FXML
     Circle ball;
+
+    @FXML
+    AnchorPane gameArea;
+
     @FXML
     Label infoLabel;
     @FXML
-    AnchorPane gameArea;
-    
+    Label scoreLabel;
+    @FXML
+    Button replayButton;
+
     private GameLifecycleManager gameLifecycleManager;
-
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        gameLifecycleManager = new GameLifecycleManager(arcan, ball, gameArea, this);
+        gameLifecycleManager = new GameLifecycleManager(arcan, ball, gameArea, scoreLabel, this);
+        replayButton.setOnMouseClicked(event -> {
+            firstInitialization();
+            startGame();
+        });
     }
 
     @Override
     public void startGame() {
-        System.out.println("Game started!");
         gameLifecycleManager.start();
         infoLabel.setVisible(false);
+        replayButton.setVisible(false);
+        gameLifecycleManager.setStatus(GameStatus.STARTED);
     }
 
     @Override
     public void stopGame() {
-        System.out.println("Game stopped!");
         gameLifecycleManager.stop();
         infoLabel.setVisible(true);
+        gameLifecycleManager.setStatus(GameStatus.PAUSED);
     }
 
     @Override
     public void looseGame() {
         stopGame();
+        infoLabel.setRotate(0);
         infoLabel.setText("U LOSE");
+        replayButton.setVisible(true);
+        gameLifecycleManager.setStatus(GameStatus.LOSED);
     }
 
     public void onMouseMoveEvent(MouseEvent mouseEvent) {
         gameLifecycleManager.mousePosition.set(mouseEvent.getSceneX(), mouseEvent.getSceneY());
+    }
+    
+    public void onKeyPressedEvent(KeyEvent event) {
+        System.out.println("Key: " +event.getCode());
+    }
+
+    private void firstInitialization() {
+        gameLifecycleManager.prepareNewGame();
+        infoLabel.setText("Pause");
+
     }
 
 }

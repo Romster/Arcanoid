@@ -68,6 +68,18 @@ public class Ball {
         return getBallLeft() + ball.getRadius();
     }
 
+    public double getBallSpeedY() {
+        return ballSpeedY;
+    }
+
+    public double getBallSpeedX() {
+        return ballSpeedX;
+    }
+
+    public void setBallSpeedX(double ballSpeedX) {
+        this.ballSpeedX = ballSpeedX;
+    }
+
     public void move() {
         ballLeft += ballSpeedX;
         ballRight += ballSpeedX;

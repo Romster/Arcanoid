@@ -12,15 +12,15 @@ import ru.romanov.arcanoid.util.MousePosition;
  *
  * @author romanov
  */
-public class Platform {
+public class ArcanPlatform {
 
-    private double platformMaxSpeed = 20;
+    private double platformMaxSpeed = 35;
     private double platformSpeedModificator = 0.1;
 
     private final Rectangle platform;
     private double currentSpeed = 0;
 
-    public Platform(Rectangle platform) {
+    public ArcanPlatform(Rectangle platform) {
         this.platform = platform;
 
     }
@@ -49,6 +49,10 @@ public class Platform {
         return currentSpeed;
     }
 
+    public Rectangle getPlatform() {
+        return platform;
+    }
+
     public void movePlatform(MousePosition mousePosition) {
         if (!mousePosition.isMouseOut()) {
             double platformCenterX = platform.getLayoutX() + platform.getWidth() / 2;
@@ -60,10 +64,10 @@ public class Platform {
                 this.currentSpeed = distance;
             }
             if (platformCenterX > mousePosition.getX()) {
-                platform.setLayoutX(platform.getLayoutX() - this.currentSpeed);
-            } else if (platformCenterX < mousePosition.getX()) {
-                platform.setLayoutX(platform.getLayoutX() + this.currentSpeed);
+                currentSpeed = -currentSpeed;
             }
+            platform.setLayoutX(platform.getLayoutX() + this.currentSpeed);
+
         }
     }
 
@@ -73,6 +77,11 @@ public class Platform {
             platformSpeed = platformMaxSpeed;
         }
         return platformSpeed;
+    }
+
+    public void changePosition(double newX, double newY) {
+        platform.setLayoutX(newX);
+        platform.setLayoutY(newY);
     }
 
 }

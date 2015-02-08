@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.canvas.*?>
@@ -9,13 +10,36 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" fx:id="gameArea" onMouseEntered="#startGame" onMouseExited="#stopGame" onMouseMoved="#onMouseMoveEvent" prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.romanov.arcanoid.FXMLDocumentController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseMoved="#onMouseMoveEvent" prefHeight="768.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.romanov.arcanoid.FXMLDocumentController">
    <children>
-      <Rectangle fx:id="arcan" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="35.0" layoutX="14.0" layoutY="719.0" stroke="BLACK" strokeType="INSIDE" width="113.0" />
-      <Circle fx:id="ball" fill="DODGERBLUE" layoutX="640.0" layoutY="14.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
-      <Label fx:id="infoLabel" layoutX="540.0" layoutY="334.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="200.0" rotate="-45.0" text="        PAUSED" textAlignment="CENTER" textFill="#b53c2c">
-         <font>
-            <Font name="Caladea Bold" size="33.0" />
-         </font></Label>
+      <AnchorPane fx:id="gameArea" layoutY="374.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-border-color: black; -fx-border-width: 3px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="scoreLabel" layoutX="1053.0" layoutY="16.0" prefHeight="53.0" prefWidth="113.0" text="0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="16.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Rectangle fx:id="arcan" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="16.0" layoutX="14.0" layoutY="738.0" stroke="BLACK" strokeType="INSIDE" width="113.0" AnchorPane.bottomAnchor="14.0" />
+            <Label layoutX="990.0" layoutY="19.0" prefHeight="53.0" prefWidth="60.0" text="Score:" AnchorPane.rightAnchor="130.0" AnchorPane.topAnchor="16.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="replayButton" layoutX="523.0" layoutY="434.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="133.0" text="Retry">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Circle fx:id="ball" fill="DODGERBLUE" layoutX="590.0" layoutY="27.0" radius="8.0" stroke="BLACK" strokeType="INSIDE" />
+            <Label fx:id="infoLabel" layoutX="516.0" layoutY="334.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="133.0" text=" PAUSED" textAlignment="CENTER" textFill="#b53c2c">
+               <font>
+                  <Font name="Caladea Bold" size="33.0" />
+               </font>
+            </Label>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </AnchorPane>
    </children>
 </AnchorPane>
