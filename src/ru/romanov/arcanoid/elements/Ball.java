@@ -32,40 +32,40 @@ public class Ball {
         initParams();
     }
 
-    public double getBallDiameter() {
+    public double getDiameter() {
         return ballDiameter;
     }
 
-    public double getBallBottom() {
+    public double getShapeBottom() {
         return ballBottom;
     }
 
-    public double getBallTop() {
+    public double getShapeTop() {
         return ballTop;
     }
 
-    public double getBallLeft() {
+    public double getShapeLeft() {
         return ballLeft;
     }
 
-    public double getBallRight() {
+    public double getShapeRight() {
         return ballRight;
     }
 
-    public Circle getBall() {
+    public Circle getShape() {
         return ball;
     }
 
-    public double getBallLayoutX() {
+    public double getShapeLayoutX() {
         return ball.getLayoutX();
     }
 
-    public double getBallLayoutY() {
+    public double getShapeLayoutY() {
         return ball.getLayoutY();
     }
 
-    public double getBallCenterX() {
-        return getBallLeft() + ball.getRadius();
+    public double getShapeCenterX() {
+        return getShapeLeft() + ball.getRadius();
     }
 
     public double getBallSpeedY() {

@@ -32,6 +32,16 @@ public class MousePosition {
         return Double.isNaN(x) || Double.isNaN(y);
     }
 
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
+    
+    
+
     public double getX() {
         return x;
     }
@@ -44,5 +54,12 @@ public class MousePosition {
         this.x = x;
         this.y = y;
     }
+
+    @Override
+    public String toString() {
+        return "MousePosition{" + "x=" + x + ", y=" + y + '}';
+    }
+    
+    
 
 }

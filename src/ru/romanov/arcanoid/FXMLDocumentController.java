@@ -27,7 +27,9 @@ public class FXMLDocumentController implements Initializable, GameEventListener 
     private static final int SCREEN_UPDATE_TIME = 1_000_000_000 / 60;
 
     @FXML
-    Rectangle arcan;
+    Rectangle bottonRect;
+    @FXML
+    Rectangle topRect;
     @FXML
     Circle ball;
 
@@ -45,7 +47,7 @@ public class FXMLDocumentController implements Initializable, GameEventListener 
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        gameLifecycleManager = new GameLifecycleManager(arcan, ball, gameArea, scoreLabel, this);
+        gameLifecycleManager = new GameLifecycleManager(bottonRect, topRect, ball, gameArea, scoreLabel, this);
         replayButton.setOnMouseClicked(event -> {
             firstInitialization();
             startGame();
@@ -82,10 +84,6 @@ public class FXMLDocumentController implements Initializable, GameEventListener 
 
     public void onMouseMoveEvent(MouseEvent mouseEvent) {
         gameLifecycleManager.mousePosition.set(mouseEvent.getSceneX(), mouseEvent.getSceneY());
-    }
-
-    public void onKeyPressedEvent(KeyEvent event) {
-        System.out.println("Key: " + event.getCode());
     }
 
     private void firstInitialization() {

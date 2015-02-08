@@ -14,48 +14,48 @@ import ru.romanov.arcanoid.util.MousePosition;
  */
 public class ArcanPlatform {
 
-    private double platformMaxSpeed = 35;
-    private double platformSpeedModificator = 0.1;
+    private final double platformMaxSpeed = 35;
+    private final double platformSpeedModificator = 0.1;
 
-    private final Rectangle platform;
+    private final Rectangle shape;
     private double currentSpeed = 0;
 
     public ArcanPlatform(Rectangle platform) {
-        this.platform = platform;
+        this.shape = platform;
 
     }
 
     public double getPlatformCenter() {
-        return getPlatformLeft() + platform.getWidth() / 2;
+        return getPlatformLeft() + shape.getWidth() / 2;
     }
 
     public double getPlatformBottom() {
-        return getPlatformTop() + platform.getHeight();
+        return getPlatformTop() + shape.getHeight();
     }
 
     public double getPlatformTop() {
-        return platform.getLayoutY();
+        return shape.getLayoutY();
     }
 
     public double getPlatformLeft() {
-        return platform.getLayoutX();
+        return shape.getLayoutX();
     }
 
     public double getPlatformRight() {
-        return getPlatformLeft() + platform.getWidth();
+        return getPlatformLeft() + shape.getWidth();
     }
 
     public double getCurrentSpeed() {
         return currentSpeed;
     }
 
-    public Rectangle getPlatform() {
-        return platform;
+    public Rectangle getShape() {
+        return shape;
     }
 
     public void movePlatform(MousePosition mousePosition) {
         if (!mousePosition.isMouseOut()) {
-            double platformCenterX = platform.getLayoutX() + platform.getWidth() / 2;
+            double platformCenterX = shape.getLayoutX() + shape.getWidth() / 2;
             double distance = Math.abs(platformCenterX - mousePosition.getX());
             double platformSpeed = countPlatformSpeed(distance);
             if (distance > platformSpeed) {
@@ -66,9 +66,17 @@ public class ArcanPlatform {
             if (platformCenterX > mousePosition.getX()) {
                 currentSpeed = -currentSpeed;
             }
-            platform.setLayoutX(platform.getLayoutX() + this.currentSpeed);
+            shape.setLayoutX(shape.getLayoutX() + this.currentSpeed);
 
         }
+    }
+
+    public void movePlatform(double speed) {
+        if (Math.abs(speed) > platformMaxSpeed) {
+            speed = Math.signum(speed) * platformMaxSpeed;
+        }
+        this.currentSpeed = speed;
+        shape.setLayoutX(shape.getLayoutX() + this.currentSpeed);
     }
 
     private double countPlatformSpeed(double distanceBetweenCenterAndMouse) {
@@ -80,8 +88,8 @@ public class ArcanPlatform {
     }
 
     public void changePosition(double newX, double newY) {
-        platform.setLayoutX(newX);
-        platform.setLayoutY(newY);
+        shape.setLayoutX(newX);
+        shape.setLayoutY(newY);
     }
 
 }

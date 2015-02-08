@@ -25,7 +25,8 @@ public class GameLifecycleManager extends AnimationTimer {
 
     private static final int SCREEN_UPDATE_TIME = 1_000_000_000 / 60;
 
-    private final ArcanPlatform platform;
+    private final ArcanPlatform bottomPlatform;
+    private final ArcanPlatform topPlatform;
     private final Ball ball;
     private final AnchorPane gameArea;
     private final GameEventListener eventListener;
@@ -39,8 +40,12 @@ public class GameLifecycleManager extends AnimationTimer {
 
     private GameStatus status;
 
-    public GameLifecycleManager(Rectangle rectangle, Circle circle, AnchorPane gameArea, Label scoreLabel, GameEventListener eventListener) {
-        this.platform = new ArcanPlatform(rectangle);
+    public GameLifecycleManager(Rectangle rectangleBottom, Rectangle rectangleTop,
+            Circle circle,
+            AnchorPane gameArea, Label scoreLabel,
+            GameEventListener eventListener) {
+        this.bottomPlatform = new ArcanPlatform(rectangleBottom);
+        this.topPlatform = new ArcanPlatform(rectangleTop);
         this.ball = new Ball(circle, ballYSpeed);
         this.gameArea = gameArea;
         this.scoreLabel = scoreLabel;
@@ -51,7 +56,8 @@ public class GameLifecycleManager extends AnimationTimer {
     @Override
     public void handle(long now) {
         if (now - lastPhase > SCREEN_UPDATE_TIME) {
-            platform.movePlatform(mousePosition);
+            bottomPlatform.movePlatform(mousePosition);
+            topPlatform.movePlatform(-bottomPlatform.getCurrentSpeed());
             ball.move();
             processCollisions();
 
@@ -68,45 +74,65 @@ public class GameLifecycleManager extends AnimationTimer {
     }
 
     private void processCollisions() {
-        if (platform.getPlatformLeft() < 0) {
-            platform.changePosition(0, platform.getPlatformTop());
+        if (bottomPlatform.getPlatformLeft() < 0) {
+            bottomPlatform.changePosition(0, bottomPlatform.getPlatformTop());
         }
-        if (platform.getPlatformRight() > gameArea.getWidth()) {
-            platform.changePosition(gameArea.getWidth() - platform.getPlatform().getWidth(), platform.getPlatformTop());
+        if (bottomPlatform.getPlatformRight() > gameArea.getWidth()) {
+            bottomPlatform.changePosition(gameArea.getWidth() - bottomPlatform.getShape().getWidth(), bottomPlatform.getPlatformTop());
         }
-        if (ball.getBallBottom() >= platform.getPlatformTop()) {
-            if (platform.getPlatformLeft() < ball.getBallRight()
-                    && platform.getPlatformRight() > ball.getBallLeft()) {
-                ball.changePosition(ball.getBallLayoutX(), platform.getPlatformTop() - ball.getBallDiameter());
-                ball.revertSpeedY();
-                double platfCenter = platform.getPlatformCenter();
-                double ballCenter = ball.getBallCenterX();
-                double xSpeedUp = platform.getCurrentSpeed() * 2 / 3;
-                ball.speedUpX(xSpeedUp);
 
+        if (topPlatform.getPlatformLeft() < 0) {
+            topPlatform.changePosition(0, topPlatform.getPlatformTop());
+        }
+        if (topPlatform.getPlatformRight() > gameArea.getWidth()) {
+            topPlatform.changePosition(gameArea.getWidth() - topPlatform.getShape().getWidth(), topPlatform.getPlatformTop());
+        }
+
+        processBallAndPlatformsCollision();
+
+        if (ball.getShapeTop() <= 0) {
+            eventListener.looseGame();
+//            ball.revertSpeedY();
+//            ball.changePosition(ball.getShapeLayoutX(), 1);
+        }
+
+        if (ball.getShapeBottom() >= gameArea.getHeight()) {
+            eventListener.looseGame();
+        }
+
+        if (ball.getShapeLeft() <= 0) {
+            ball.revertSpeedX();
+            ball.changePosition(1, ball.getShapeLayoutY());
+        }
+
+        if (ball.getShapeRight() >= gameArea.getWidth()) {
+            ball.revertSpeedX();
+            ball.changePosition(gameArea.getWidth() - ball.getDiameter() - 1, ball.getShapeLayoutY());
+        }
+    }
+
+    private void processBallAndPlatformsCollision() {
+        if (ball.getShapeBottom() >= bottomPlatform.getPlatformTop()) {
+            if (bottomPlatform.getPlatformLeft() < ball.getShapeRight()
+                    && bottomPlatform.getPlatformRight() > ball.getShapeLeft()) {
+                ball.changePosition(ball.getShapeLayoutX(), bottomPlatform.getPlatformTop() - ball.getDiameter());
+                ball.revertSpeedY();
+                double xSpeedUp = bottomPlatform.getCurrentSpeed() * 2 / 3;
+                ball.speedUpX(xSpeedUp);
                 score += 10;
                 scoreLabel.setText(Integer.toString(score));
 
             }
-        }
-
-        if (ball.getBallTop() <= 0) {
-            ball.revertSpeedY();
-            ball.changePosition(ball.getBallLayoutX(), 1);
-        }
-
-        if (ball.getBallBottom() >= gameArea.getHeight()) {
-            eventListener.looseGame();
-        }
-
-        if (ball.getBallLeft() <= 0) {
-            ball.revertSpeedX();
-            ball.changePosition(1, ball.getBallLayoutY());
-        }
-
-        if (ball.getBallRight() >= gameArea.getWidth()) {
-            ball.revertSpeedX();
-            ball.changePosition(gameArea.getWidth() - ball.getBallDiameter() - 1, ball.getBallLayoutY());
+        } else if (ball.getShapeTop() <= topPlatform.getPlatformBottom()) {
+            if (topPlatform.getPlatformLeft() < ball.getShapeRight()
+                    && topPlatform.getPlatformRight() > ball.getShapeLeft()) {
+                ball.changePosition(ball.getShapeLayoutX(), topPlatform.getPlatformBottom());
+                ball.revertSpeedY();
+                double xSpeedUp = topPlatform.getCurrentSpeed() * 2 / 3;
+                ball.speedUpX(xSpeedUp);
+                score += 10;
+                scoreLabel.setText(Integer.toString(score));
+            }
         }
     }
 
@@ -115,9 +141,14 @@ public class GameLifecycleManager extends AnimationTimer {
 
             @Override
             public void run() {
-                ball.changePosition(gameArea.getWidth() / 2, 0);
+                ball.changePosition(gameArea.getWidth() / 2, gameArea.getHeight() / 3);
                 ball.setBallSpeedX(0);
-                platform.changePosition(0, platform.getPlatformTop());
+                bottomPlatform.changePosition(0, bottomPlatform.getPlatformTop());
+                bottomPlatform.getShape().setVisible(true);
+                topPlatform.changePosition(
+                        gameArea.getLayoutX() + gameArea.getWidth() - topPlatform.getShape().getWidth(),
+                        topPlatform.getPlatformTop());
+                topPlatform.getShape().setVisible(true);
                 score = 0;
                 scoreLabel.setText(Integer.toString(score));
 
@@ -133,7 +164,7 @@ public class GameLifecycleManager extends AnimationTimer {
                     }
                 });
                 gameArea.getScene().setOnMouseClicked(mc -> {
-                     if (mc.getButton() == MouseButton.PRIMARY) {
+                    if (mc.getButton() == MouseButton.PRIMARY) {
                         switch (status) {
                             case PAUSED:
                                 eventListener.startGame();
