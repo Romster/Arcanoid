@@ -9,7 +9,7 @@ import javafx.scene.shape.Circle;
 
 /**
  *
- * @author romanov
+ * @author romanov and enot =)
  */
 public class Ball {
 
